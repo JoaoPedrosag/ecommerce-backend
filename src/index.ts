@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
-
+import path from 'node:path';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -18,8 +18,10 @@ mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@javaweb.mrxj1c9.mongodb.
         console.log('Server is running on port 3001');
 
     });
-    app.use(router);
+    app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
     app.use(express.json());
+    app.use(router);
+
 }).catch((err)=> {
     console.log(err);
 });
